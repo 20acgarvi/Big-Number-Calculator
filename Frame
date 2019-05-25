@@ -1,0 +1,428 @@
+import java.awt.Canvas;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class Frame {
+	
+	JFrame myFrame = new JFrame("Integer Calculator");
+    Window myWindow = new Window(this);
+    Calculator myCalculator = new Calculator(myWindow);
+	public Frame()
+	{
+		//Lots and Lots and Lots of Buttons
+		//
+		JButton bGT=new JButton("GT");
+	    this.format(bGT,10);
+	    bGT.setBounds(300,180,60,60);
+	    myFrame.add(bGT);
+	    bGT.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){  
+	    		myCalculator.grandtotal();
+	    		myCalculator.keyPressed("grandtotal");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bC=new JButton("C");
+	    this.format(bC,15);
+	    bC.setBounds(360,180,60,60);
+	    myFrame.add(bC);
+	    bC.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.clear();
+	    		myCalculator.keyPressed("clear");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bplusminus=new JButton("\u00B1");
+	    this.format(bplusminus, 15);
+	    bplusminus.setBounds(420,180,60,60);
+	    myFrame.add(bplusminus);
+	    bplusminus.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.negative();
+	    		myCalculator.keyPressed("plusminus");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bexponent=new JButton("^");
+	    this.format(bexponent,15);
+	    bexponent.setBounds(480,180,60,60);
+	    myFrame.add(bexponent);
+	    bexponent.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    		myCalculator.setOperator("^");
+	    		myCalculator.keyPressed("exponent");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bdivide=new JButton("\u00F7");
+	    this.format(bdivide,15);
+	    bdivide.setBounds(540,180,60,60);
+	    myFrame.add(bdivide);
+	    bdivide.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    	    myCalculator.setOperator("/");
+	    		myCalculator.keyPressed("divide");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });
+	    JButton bMR=new JButton("MR");
+	    this.format(bMR,10);
+	    bMR.setBounds(300,240,60,60);
+	    myFrame.add(bMR);
+	    bMR.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    		myCalculator.recall();
+	    		myCalculator.keyPressed("memoryrecall");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b7=new JButton("7");
+	    this.format(b7,15);
+	    b7.setBounds(360,240,60,60);
+	    myFrame.add(b7);
+	    b7.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.append(7); 
+	    		myCalculator.keyPressed("7");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b8=new JButton("8");
+	    this.format(b8, 15);
+	    b8.setBounds(420,240,60,60);
+	    myFrame.add(b8);
+	    b8.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    		myCalculator.append(8); 
+	    		myCalculator.keyPressed("8"); 
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b9=new JButton("9");
+	    this.format(b9,15);
+	    b9.setBounds(480,240,60,60);
+	    myFrame.add(b9);
+	    b9.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    		myCalculator.append(9);
+	    		myCalculator.keyPressed("9");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bmultiply=new JButton("x");
+	    this.format(bmultiply,15);
+	    bmultiply.setBounds(540,240,60,60);
+	    myFrame.add(bmultiply);
+	    bmultiply.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    		myCalculator.setOperator("x");
+	    		myCalculator.keyPressed("multiply");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });
+		JButton bMC=new JButton("MC");
+	    this.format(bMC,10);
+	    bMC.setBounds(300,300,60,60);
+	    myFrame.add(bMC);
+	    bMC.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.memoryClear();
+	    		myCalculator.keyPressed("memoryclear"); 
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b4=new JButton("4");
+	    this.format(b4,15);
+	    b4.setBounds(360,300,60,60);
+	    myFrame.add(b4);
+	    b4.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.append(4);
+	    		myCalculator.keyPressed("4");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b5=new JButton("5");
+	    this.format(b5, 15);
+	    b5.setBounds(420,300,60,60);
+	    myFrame.add(b5);
+	    b5.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+	    		myCalculator.append(5); 
+	    		myCalculator.keyPressed("5");   
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b6=new JButton("6");
+	    this.format(b6,15);
+	    b6.setBounds(480,300,60,60);
+	    myFrame.add(b6);
+	    b6.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.append(6);
+	    		myCalculator.keyPressed("6");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bminus=new JButton("-");
+	    this.format(bminus,15);
+	    bminus.setBounds(540,300,60,60);
+	    myFrame.add(bminus);
+	    bminus.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.setOperator("-");
+	    		myCalculator.keyPressed("minus");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });
+	    JButton bMminus=new JButton("M-");
+	    this.format(bMminus,10);
+	    bMminus.setBounds(300,360,60,60);
+	    myFrame.add(bMminus);
+	    bMminus.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.memorySubtract();
+	    		myCalculator.keyPressed("memoryminus");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b1=new JButton("1");
+	    this.format(b1,15);
+	    b1.setBounds(360,360,60,60);
+	    myFrame.add(b1);
+	    b1.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.append(1); 
+	    		myCalculator.keyPressed("1");  
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b2=new JButton("2");
+	    this.format(b2, 15);
+	    b2.setBounds(420,360,60,60);
+	    myFrame.add(b2);
+	    b2.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.append(2); 
+	    		myCalculator.keyPressed("2");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b3=new JButton("3");
+	    this.format(b3,15);
+	    b3.setBounds(480,360,60,60);
+	    myFrame.add(b3);
+	    b3.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.append(3);
+	    		myCalculator.keyPressed("3");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bAdd=new JButton("+");
+	    this.format(bAdd,15);
+	    bAdd.setBounds(540,360,60,60);
+	    myFrame.add(bAdd);
+	    bAdd.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.setOperator("+");
+	    		myCalculator.keyPressed("plus");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });
+	    JButton bMplus=new JButton("M+");
+	    this.format(bMplus, 15);
+	    bMplus.setBounds(300,420,60,60);
+	    myFrame.add(bMplus);
+	    bMplus.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    		myCalculator.memoryAdd();
+	    		myCalculator.keyPressed("memoryplus"); 
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton b0=new JButton("0");
+	    this.format(b0,15);
+	    b0.setBounds(360,420,180,60);
+	    myFrame.add(b0);
+	    b0.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){
+ 	           myCalculator.append(0);
+	    		myCalculator.keyPressed("0");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });  
+	    JButton bEquals=new JButton("=");
+	    this.format(bEquals,15);
+	    bEquals.setBounds(540,420,60,60);
+	    myFrame.add(bEquals);
+	    bEquals.addActionListener(new ActionListener(){  
+	    	public void actionPerformed(ActionEvent e){ 
+	    	    myCalculator.compute();
+	    		myCalculator.keyPressed("equals");
+	    		try {
+					BigNumberCalculator.playClick();
+				} catch (UnsupportedAudioFileException | IOException 
+						| LineUnavailableException e1) {
+					System.out.println("Something went wrong!");
+					e1.printStackTrace();
+				}
+	    	        }  
+	    	    });
+	    //End of Buttons
+	    //
+		myFrame.setSize(600, 480);
+	    myWindow.setSize(600, 480);
+	    myFrame.add(myWindow);
+	    myFrame.pack();
+		myFrame.setVisible(true);
+	}
+	public void format(JButton b, int size)
+	{
+		b.setFont(new Font(Font.SANS_SERIF, 1, size));
+	    b.setOpaque(false);
+	    b.setBorderPainted(true);
+	}
+	
+}
