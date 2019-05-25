@@ -1,0 +1,273 @@
+import java.util.ArrayList;
+import java.util.Queue;
+
+//TODO Debug Repeated calls on multiply
+
+public class Calculator {
+	private BigNumber a, b, myMemory, grandTotal;
+	private Window myWindow;
+	private String myOperator;
+	private String lastKeyPressed;
+	private boolean currentOperator;
+	//private Queue<BigNumber> myHistory;
+	
+	public Calculator(Window c)
+	{
+		a = new BigNumber("0");
+		b = new BigNumber("0");
+		grandTotal = new BigNumber("0");
+		myMemory = new BigNumber("0");
+		myWindow = c;
+	}
+	
+
+	public void keyPressed(String s) {
+		lastKeyPressed = s;
+	}
+	
+	public void update(BigNumber b)
+	{
+		myWindow.paintBigNumber(b);
+		updateMemory();
+	}
+	
+	public void updateMemory()
+	{
+		myWindow.paintMemory(myMemory);
+	}
+	
+	public void setOperator(String s)
+	{
+		myOperator = s;
+		if (!currentOperator)
+		{
+			currentOperator = true;
+			b = new BigNumber("0");
+		} else {
+			b = new BigNumber("");
+			this.compute();
+		}
+		System.out.println(myOperator);
+	}
+	public void append(int i)
+	{
+		if ((currentOperator) && (lastKeyPressed != "equals"))
+		{
+			b.append(i);
+			update(b);
+			System.out.println(b);
+		}
+		else if (lastKeyPressed != "equals")
+		{
+			a.append(i);
+			update(a);
+			System.out.println(a);
+		}
+		else
+		{
+			a = new BigNumber("0");
+			a.append(i);
+			update(a);
+			System.out.println(a);
+			currentOperator = false;
+		}
+	}
+	public BigNumber compute()
+	{
+		System.out.println("-----");
+		if ((a.getLength() > 0) && (b.getLength() > 0))
+		{
+			System.out.println(a + " " + myOperator + " " + b);
+			BigNumber c = new BigNumber("");
+			if (myOperator == "+")
+			{
+				c = a.add(b);
+			}
+			else if (myOperator == "-")
+			{
+				c = a.subtract(b);
+			}
+			else if (myOperator == "x")
+			{
+				c = a.multiply(b);
+			}
+			else if (myOperator == "/")
+			{
+				c = a.divide(b);
+			} 
+			else if (myOperator == "^")
+			{
+				c = a.exponent(b);
+			} else {
+				//pass
+			}
+			//b = new BigNumber("0");
+			update(c);
+			System.out.println(c);
+			a = new BigNumber(alias(c));
+			grandTotal = grandTotal.add(c);
+			return c;
+		} else {
+			System.out.println("One number doesn't exist.");
+			return new BigNumber("0");
+		}
+	}
+	
+	public ArrayList<Integer> alias(BigNumber b)
+	{
+	      ArrayList<Integer> alias = new ArrayList<Integer>();
+	      for (Integer i : b.getDigits()) 
+	        alias.add(i);
+	      return alias;
+	}
+	
+	public void negative()
+	{
+		if ((currentOperator) && (lastKeyPressed != "equals"))
+		{
+			b.negative();
+			update(b);
+			System.out.println(b);
+		}
+		else if (lastKeyPressed != "equals")
+		{
+			a.negative();
+			update(a);
+			System.out.println(a);
+		}
+		else
+		{
+			a.negative();
+			update(a);
+			System.out.println(a);
+			currentOperator = false;
+		}
+	}
+	
+	public void memoryAdd()
+	{
+		if (!currentOperator)
+		{
+			myMemory = myMemory.add(a);
+			a = new BigNumber("0");
+		}
+		else if  (lastKeyPressed == "equals")
+		{
+			myMemory = myMemory.add(a);
+			a = new BigNumber("0");
+			currentOperator = false;
+		}
+		else
+		{
+			myMemory = myMemory.add(b);
+			b = new BigNumber("0");
+		}
+		updateMemory();
+		System.out.println(myMemory);
+	}
+	
+	public void recall()
+	{
+		if (myMemory.getLength() > 0)
+		{
+			if(!currentOperator)
+			{
+				a = new BigNumber(alias(myMemory));
+				System.out.println(a);
+				update(a);
+			}
+			else
+			{
+				b = new BigNumber(alias(myMemory));
+				System.out.println(b);
+				update(b);
+			}
+		}
+			
+	}
+	
+	public void memoryClear()
+	{
+		myMemory = new BigNumber("0");
+		if (lastKeyPressed == "equals")
+		{
+			currentOperator = false;
+			a = new BigNumber("0");
+		}
+		updateMemory();
+		System.out.println("Memory Cleared");
+	}
+	
+	/*public void addtoHistory(BigNumber b)
+	{
+		if (myHistory.size() > 3)
+		{
+			myHistory.remove();
+		} 
+		myHistory.add(b);
+	}*/
+
+
+	public void grandtotal() {
+		if (lastKeyPressed != "grandtotal")
+			update(grandTotal);
+		else
+			grandTotal = new BigNumber("0");
+		System.out.println(grandTotal);
+	}
+
+
+	public void clear() {
+		if (lastKeyPressed != "clear")
+		{
+			if (!currentOperator)
+			{
+				a = new BigNumber("0");
+				update(a);
+			}
+			else
+			{
+				b = new BigNumber("0");
+				update(b);
+			}
+		}
+		else
+		{
+			a = new BigNumber("0");
+			update(a);
+			b = new BigNumber("0");
+			memoryClear();
+			grandTotal = new BigNumber("0");
+			myOperator = "";
+			currentOperator = false;
+			System.out.println("Calculator Cleared");
+
+		}
+		
+	}
+
+
+	public void memorySubtract() {
+		if (!currentOperator)
+		{
+			myMemory = myMemory.subtract(a);
+			a = new BigNumber("0");
+		}
+		else if  (lastKeyPressed == "equals")
+		{
+			myMemory = myMemory.subtract(a);
+			a = new BigNumber("0");
+			currentOperator = false;
+		}
+		else
+		{
+			myMemory = myMemory.subtract(b);
+			b = new BigNumber("0");
+		}
+		System.out.println(myMemory);
+		updateMemory();
+		
+	}
+	
+
+}
