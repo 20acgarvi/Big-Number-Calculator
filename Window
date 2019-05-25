@@ -1,0 +1,80 @@
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Font;
+
+public class Window extends Canvas {
+	Frame myFrame;
+	String[] lines = {"0","","","",""};
+	String myMemory = "";
+	int SIZE, offset;
+	BigNumber output;
+	Color GREY = new Color(150,150,150);
+	Color DARK_GREY = new Color(80,80,80);
+	Color LIGHT_GREY = new Color(200,200,200);
+	public Window(Frame f)
+	{
+		myFrame = f;
+		SIZE = 30;
+		offset = 35;
+		output = new BigNumber("0");
+	}
+	
+	public void resetLines()
+	{
+		String[] newLines = {"","","","",""};
+		lines = newLines;
+	}
+	
+	public void paintBigNumber(BigNumber b)
+	{
+		resetLines();
+		output = b.removeZeroes();
+		int length = output.getLength();
+		if (b.isNegative())
+			length++;
+		for (int i = 0; i < length; i++)
+		{
+			String digit = output.toString().substring(i,i+1);
+			if (i < 28)
+				lines[0] += digit;
+			else if (i < 56)
+				lines[1] += digit;
+			else if (i < 84)
+				lines[2] += digit;
+			else if (i < 112)
+				lines[3] += digit;
+			else
+				lines[4] += digit;
+		}
+		repaint();
+	}
+	
+	public void paintMemory(BigNumber b)
+	{
+		myMemory = b.toString();
+		if (myMemory.length() > 30)
+			myMemory = myMemory.substring(0, 30);
+		repaint();
+	}
+	
+	public void paint(Graphics g) {
+		g.setColor(DARK_GREY);
+	    g.fillRect(0, 0, 600, 180);
+	    g.setColor(GREY);
+	    g.fillRect(0, 180, 600, 330);
+	    g.setColor(LIGHT_GREY);
+	    g.fillRoundRect(10, 185, 280, 20, 5, 5);
+	    g.fillRoundRect(10, 210, 280, 260, 5, 5);
+	    g.setFont(new Font("Font", 1, SIZE));
+	    for (int j = 0; j < lines.length; j++)
+	    {
+	    	g.drawString(lines[j], 10, offset);
+	    	offset += SIZE;
+	    }
+	    offset = 35;
+	    g.setColor(DARK_GREY);
+	    g.setFont(new Font("Font", 0, 15));
+	    g.drawString(myMemory, 15, 200);
+	}
+}
