@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class Window extends Canvas {
+	private static final long serialVersionUID = 6L;
+
 	Frame myFrame;
 	String[] lines = {"0","","","",""};
 	String myMemory = "";
