@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,16 +12,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class BigNumberCalculator{
 	public static void main(String[] args) {
-		//Integer.MAX_VALUE returns 2147483647
-	      BigNumber worldPopulation = new BigNumber("7696750000");
-	      BigNumber otherNumber = new BigNumber("45123456789");
-	      BigNumber fourteenFactorial = new BigNumber("87178291200");
-	      BigNumber squareOf65536 = new BigNumber("4294967296");
-
-	      Frame f = new Frame();
-	      //TODO Clean up unused imports
-	      //TODO Implement better divide method
-	      
+	      new Frame();
+	      //TODO Implement better divide method  
 	}
 	
 	public static void playClick() throws UnsupportedAudioFileException, 
@@ -36,10 +27,3 @@ public class BigNumberCalculator{
 		click.start();
 	}
 }
-
-
-
-
-
-        
-
