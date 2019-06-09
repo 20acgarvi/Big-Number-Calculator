@@ -79,7 +79,6 @@ public class BigNumber implements Comparable<BigNumber> {
 	        setAndCarry %= 10;
 	        setCarry = true;
 	      }  
-	      //System.out.println(set + " carry of " + carry );
 	      newDigits.add(0, setAndCarry);
 	      carry = 0;
 	      if (setCarry)
@@ -88,10 +87,18 @@ public class BigNumber implements Comparable<BigNumber> {
 	    }
 	    while (i < this.getLength() + 1)
 	    {
-	      newDigits.add(0,
-	        this.getDigits().get(this.getLength() - i) + carry
-	      );
-	      carry = 0;
+	    	if (this.getDigits().get(this.getLength() - i) + carry < 10)
+	    	{
+		    	newDigits.add(0,
+		    			this.getDigits().get(this.getLength() - i) + carry);
+		    	carry = 0;
+	    	}
+	    	else
+	    	{
+	    		newDigits.add(0,
+		    			(this.getDigits().get(this.getLength() - i) + carry) % 10);
+		    	carry = (this.getDigits().get(this.getLength() - i) + carry) / 10;
+	    	}
 	      i++;
 	    }
 	    if (carry != 0)
@@ -133,7 +140,6 @@ public class BigNumber implements Comparable<BigNumber> {
 	            setAndCarry %= 10;
 	            setCarry = true;
 	          }
-	          //System.out.println(set + " carry of " + carry + " rounded " + setAndCarry);
 	          newDigits.add(0, setAndCarry);
 	          if (setCarry)
 	            carry = (set + carry) / 10;
@@ -148,12 +154,6 @@ public class BigNumber implements Comparable<BigNumber> {
 	        }
 	        for (k = 0; k < i; k++)
 	          newDigits.add(0);
-	      /*String s = "";
-	      for (Integer q : newDigits)
-	      {
-	        s += q;
-	      }
-	      System.out.println(s + " + " + result + " = " + result.add(new BigNumber(newDigits)));*/
 	      result = result.add(new BigNumber(newDigits));
 	    }
 	    if ((!(this.isNegative()) && !(factor.isNegative())) || ((this.isNegative()) && (factor.isNegative())))
@@ -205,7 +205,6 @@ public class BigNumber implements Comparable<BigNumber> {
 	  
 	public BigNumber divide(BigNumber denominator)
 	  {
-		//long start = System.currentTimeMillis();
 		if (denominator.getLength() == 1)
 		{
 			if (denominator.asInt() == 0)
@@ -217,24 +216,36 @@ public class BigNumber implements Comparable<BigNumber> {
 	        alias.add(i);
 	    BigNumber numerator = new BigNumber(alias);
 	    numerator = numerator.abs();
-	    BigNumber result = new BigNumber("0"); 
-	    BigNumber increment = new BigNumber("1");
+	    ArrayList<Integer> pows = new ArrayList<Integer>();
 	    while (numerator.compareTo(denominator) > -1)
 	    {
-	      numerator = numerator.subtract(denominator); 
-	      result = result.add(increment);
-	      //System.out.println(result);
+	    	ArrayList<Integer> alias2 = new ArrayList<Integer>();
+		      for (Integer i : denominator.getDigits()) 
+		        alias2.add(i);
+		    BigNumber d = new BigNumber(alias2);
+		    int x = 1;
+		    while ((d.multiply(denominator)).compareTo(numerator) < 1)
+		    {
+		    	d = d.multiply(denominator);
+		    	++x;
+		    }
+		    numerator = numerator.subtract(d);
+		    pows.add(x);
 	    }
-	    //System.out.println("This calculation took " + (System.currentTimeMillis() - start) + " milliseconds.");
+	    BigNumber result = new BigNumber("0");
+	    for (Integer x: pows)
+	    {
+	    	--x;
+	    	result = result.add(denominator.exponent(new BigNumber(x.toString())));
+	    }
 	    if ((!(this.isNegative()) && !(denominator.isNegative())) || ((this.isNegative()) && (denominator.isNegative())))
-	      return result;
-	    else
-	      return result.negative();
+		      return result;
+		    else
+		      return result.negative();
 	  }
 	
 	public BigNumber exponent(BigNumber power)
 	{
-		//int intPower = power.asInt();
 		//alias solves aliasing problem with fxn
 		ArrayList<Integer> alias = new ArrayList<Integer>();
 		ArrayList<Integer> alias2 = new ArrayList<Integer>();
@@ -248,7 +259,6 @@ public class BigNumber implements Comparable<BigNumber> {
 	    while (aliasPower.compareTo(new BigNumber("1")) > 0 )
 		{
 			result = result.multiply(this);
-			//System.out.println(result);
 			aliasPower = aliasPower.subtract(new BigNumber("1"));
 		}
 		return result;
